@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Money Advisor | Premium Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-gem"></i>
+                <span>AntiGravity Finance</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-link active" data-section="dashboard">
+                    <i class="fas fa-th-large"></i> <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-link" data-section="analytics">
+                    <i class="fas fa-chart-pie"></i> <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-link" data-section="goals">
+                    <i class="fas fa-bullseye"></i> <span>Savings Goals</span>
+                </a>
+                <a href="#" class="nav-link" data-section="advisor">
+                    <i class="fas fa-robot"></i> <span>AI Advisor</span>
+                </a>
+                <a href="#" class="nav-link" data-section="history">
+                    <i class="fas fa-history"></i> <span>Recent History</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="currency-toggle">
+                    <span id="curr-label">₹ INR</span>
+                    <label class="switch">
+                        <input type="checkbox" id="currency-switch">
+                        <span class="slider round"></span>
+                    </label>
+                    <span>$ USD</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search insights...">
+                </div>
+                <div class="user-profile">
+                    <button class="export-btn" onclick="exportData()">
+                        <i class="fas fa-download"></i> Export Report
+                    </button>
+                    <div class="avatar">
+                        <img src="https://ui-avatars.com/api/?name=User&background=6366f1&color=fff" alt="User">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="section-header">
+                    <h1>Welcome Back, <span class="username">Smart Saver</span></h1>
+                    <p>Here's what's happening with your money today.</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Left: Input Form -->
+                    <div class="glass-card form-card">
+                        <h3><i class="fas fa-plus-circle"></i> Quick Entry</h3>
+                        <form id="expenseForm">
+                            <div class="input-grid">
+                                <div class="form-group full-width">
+                                    <label>Monthly Income</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-wallet"></i>
+                                        <input type="number" id="income" placeholder="Total Income" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Rent/EMI</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-home"></i>
+                                        <input type="number" id="rent" placeholder="Rent" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Groceries</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-shopping-basket"></i>
+                                        <input type="number" id="groceries" placeholder="Food" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Travel</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-car"></i>
+                                        <input type="number" id="travel" placeholder="Commute" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Dining Out</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-utensils"></i>
+                                        <input type="number" id="food_delivery" placeholder="Delivery" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Shopping</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-bag-shopping"></i>
+                                        <input type="number" id="shopping" placeholder="Clothes, etc." required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Subs</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-tv"></i>
+                                        <input type="number" id="subscriptions" placeholder="Netflix/Spotify" required>
+                                    </div>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label>Other</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-ellipsis-h"></i>
+                                        <input type="number" id="other" placeholder="Miscellaneous" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="primary-btn" onclick="analyze()">
+                                <span class="btn-text">Run AI Analysis</span>
+                                <div class="loader-dots"><span></span><span></span><span></span></div>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Right: Quick Summary -->
+                    <div class="stats-overview">
+                        <div id="quick-stats" class="stats-row">
+                            <!-- Dynamically populated -->
+                            <div class="glass-card stat-item">
+                                <span class="label">Financial Health</span>
+                                <span class="value" id="dash-health">--</span>
+                                <div class="mini-chart">
+                                    <div class="bar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="glass-card stat-item">
+                                <span class="label">Savings Rate</span>
+                                <span class="value" id="dash-savings-rate">--</span>
+                                <div class="mini-chart">
+                                    <div class="bar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="glass-card chart-card">
+                            <canvas id="main-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics" class="content-section">
+                <div class="section-header">
+                    <h1>Deep Analytics</h1>
+                    <p>Understand your spending patterns over time.</p>
+                </div>
+                <div class="analytics-layout">
+                    <div class="glass-card wide">
+                        <h3>Spending Trends</h3>
+                        <div class="trend-container">
+                            <canvas id="trend-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="analytics-grid">
+                        <div class="glass-card" id="overspent-container">
+                            <h3>Overspent Hotspots</h3>
+                            <div id="overspent-list" class="empty-state">No data analyzed yet.</div>
+                        </div>
+                        <div class="glass-card" id="advice-container">
+                            <h3>AI Intelligent Insights</h3>
+                            <div id="ai-advice-list" class="empty-state">Run analysis to see tips.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Savings Goals Section -->
+            <section id="goals" class="content-section">
+                <div class="section-header">
+                    <h1>Savings Goals</h1>
+                    <p>Set targets and watch your progress grow.</p>
+                </div>
+                <div class="goals-grid">
+                    <div class="glass-card add-goal">
+                        <h3>Create New Goal</h3>
+                        <div class="form-group">
+                            <input type="text" id="goal-name" placeholder="E.g. Tesla Model 3">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" id="goal-target" placeholder="Target Amount">
+                        </div>
+                        <button class="secondary-btn" onclick="addNewGoal()">Add Goal</button>
+                    </div>
+                    <!-- Dynamically populated goals -->
+                    <div id="goals-list-container" class="goals-list"></div>
+                </div>
+            </section>
+
+            <!-- AI Advisor Section -->
+            <section id="advisor" class="content-section">
+                <div class="section-header">
+                    <h1>Virtual Financial Advisor</h1>
+                    <p>Get instant answers to your money questions.</p>
+                </div>
+                <div class="chat-container glass-card">
+                    <div id="chat-messages" class="chat-body">
+                        <div class="message ai">
+                            Hello! I'm your financial assistant. You can ask me things like "How can I save more?" or
+                            "What's the 50/30/20 rule?".
+                        </div>
+                    </div>
+                    <div class="chat-footer">
+                        <input type="text" id="chat-input" placeholder="Ask your advisor...">
+                        <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History Section -->
+            <section id="history" class="content-section">
+                <div class="section-header">
+                    <h1>Analysis History</h1>
+                    <p>Review your past financial records.</p>
+                </div>
+                <div class="glass-card history-card">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Income</th>
+                                <th>Expense</th>
+                                <th>Savings</th>
+                                <th>Health</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-body">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scanning Overlay -->
+    <div id="scanner" class="scanner-overlay">
+        <div class="scanner-line"></div>
+        <div class="scanner-text">AI IS SCANNING YOUR FINANCES...</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
