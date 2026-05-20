@@ -43,11 +43,6 @@ cd AI-Personal-Money-Advisor
 2. Set Up the Backend
 bashcd backend
 python -m venv .venv
-
-# Windows
-.venv\Scripts\activate
-
-
 pip install -r requirements.txt
 3. Run the Backend Server
 bashpython app.py
@@ -85,8 +80,8 @@ Use Export Report to save a summary
  Mobile-responsive redesign
  Integration with UPI / bank statement import
  Dark mode
-
-https://ai-personal-money-advisor.onrender.com
+ 
+https://github.com/SrushtiSurwase-14/AI-Personal-Money-Advisor.git
 
 👩‍💻 Author
 Srushti Surwase
