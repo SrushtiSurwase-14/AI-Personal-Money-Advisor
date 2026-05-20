@@ -86,7 +86,7 @@ Use Export Report to save a summary
  Integration with UPI / bank statement import
  Dark mode
 
-https://github.com/SrushtiSurwase-14/AI-Personal-Money-Advisor.git
+https://ai-personal-money-advisor.onrender.com
 
 👩‍💻 Author
 Srushti Surwase
